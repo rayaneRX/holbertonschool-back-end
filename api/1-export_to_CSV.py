@@ -31,14 +31,6 @@ if __name__ == "__main__":
             csv_content.writerows([[task['userId'], user_info['username'],
                                     task['completed'], task['title']]])
 
-
-
-
-
-
-
-
-
 """#!/usr/bin/python3
 Script that, using this REST API, for a given employee
 import requests
@@ -56,7 +48,6 @@ if __name__ == '__main__':
     # Todo list for the given user
     todo_response = requests.get(f"{API_URL}/todos?userId={argv[1]}")
     todo_data = todo_response.json()
-    
     # Display progress
     completed_tasks = [task for task in todo_data if task['completed']]
     employee_name = user_data["name"]
@@ -70,7 +61,8 @@ if __name__ == '__main__':
     # Create and write to CSV file
     filename = f"{argv[1]}.csv"
     with open(filename, mode='w') as csv_file:
-        fieldnames = ['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE']
+        fieldnames = ['USER_ID', 'USERNAME',
+        'TASK_COMPLETED_STATUS', 'TASK_TITLE']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
         writer.writeheader()
