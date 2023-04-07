@@ -1,29 +1,25 @@
 #!/usr/bin/python3
-"""Script that, using this REST API, for a given employee"""
+"""API"""
+
 import requests
 from sys import argv
 
-API_URL = 'https://jsonplaceholder.typicode.com'
 
+api_url = "https://jsonplaceholder.typicode.com"
 
-if __name__ == '__main__':
-    # User information
-    user_response = requests.get(f"{API_URL}/users/{argv[1]}")
-    user_data = user_response.json()
+if __name__ == "__main__":
+    user_info = requests.get(f"{api_url}/users/{argv[1]}")
+    todo_list = requests.get(f"{api_url}/todos?userId={argv[1]}")
 
-    # Todo list for the given user
-    todo_response = requests.get(f"{API_URL}/todos?userId={argv[1]}")
-    todo_data = todo_response.json()
+    user_data = user_info.json()
+    todoDATA = todo_list.json()
 
-    # Filter completed tasks
-    completed_tasks = [task for task in todo_data if task['completed']]
+    completed = [task for task in todoDATA if task["completed"]]
+    EMPLOYEE_NAME = user_data["name"]
+    NUMBER_OF_DONE_TASKS = len(completed)
+    TOTAL_NUMBER_OF_TASKS = len(todoDATA)
 
-    # Display progress
-    employee_name = user_data["name"]
-    num_completed_tasks = len(completed_tasks)
-    total_tasks = len(todo_data)
-    print("Employee {} is done with tasks({}/{}):".format(
-        employee_name, num_completed_tasks, total_tasks))
-
-    for task in completed_tasks:
+    print("Employee {} is done with task ({}/{})".format(
+            EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
+    for task in completed:
         print(f"\t {task['title']}")
